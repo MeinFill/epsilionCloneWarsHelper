@@ -1,5 +1,11 @@
 export const skillsT3 = [
   {
+    dodge: 3,
+    counter: 2,
+    name: "Следи за рукой(3⚡️🤺2)",
+    class: 2,
+  },
+  {
     crit: 3,
     name: "По наитию(3🥊)",
     class: 2,
@@ -112,6 +118,7 @@ export const skillsT3 = [
   },
   {
     attack: 2,
+    def: 2,
     name: "Концентрация (2🗡2🛡)",
     class: 3,
   },

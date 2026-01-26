@@ -25,6 +25,7 @@ function App() {
           <ComponentPlayerOne fightText={fightText.text} />
           <ComponentPlayerOne fightText={fightText.text} />
           <ComponentPlayerOne fightText={fightText.text} />
+          <ComponentPlayerOne fightText={fightText.text} />
         </div>
         <div className="input-div">
           <textarea
