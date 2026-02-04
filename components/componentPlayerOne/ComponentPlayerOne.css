@@ -8,12 +8,16 @@
 
 .player-setting {
   display: flex;
+  gap: 2px;
+}
+
+.player-information {
+  display: flex;
   flex-direction: column;
   align-items: center;
   background-color: rgba(54, 54, 54, 0.9);
   width: 100%;
   border-radius: 20px;
-  margin-bottom: 4px;
   padding: 3px;
 }
 
@@ -79,6 +83,7 @@
   width: 450px;
   margin-bottom: 3px;
 }
+
 .div-skill-use {
   background-color: rgba(45, 40, 40, 0.8);
   width: 100%;
@@ -86,6 +91,69 @@
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+.player-classes {
+  display: flex;
+  flex-direction: column;
+  gap: 3px
+}
+
+.defender-class {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(139, 199, 134);
+  color: black;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.berserk-class {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(199, 147, 134);
+  color: black;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.dodge-class {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(199, 198, 134);
+  color: black;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cd-class {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(138, 84, 54);
+  color: black;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.choosen {
+  filter: brightness(0.4);
+}
+
 .skill-can-use {
   width: 223px;
 }

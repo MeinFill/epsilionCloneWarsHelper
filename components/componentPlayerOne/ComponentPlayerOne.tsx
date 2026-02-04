@@ -14,11 +14,12 @@ function ComponentPlayerOne({ fightText }: Props) {
   const [dodge, addDodge] = useState(0)
   const [counterStrike, addCounterStrike] = useState(0)
   const [miss, addMiss] = useState(0)
+  const [playerClass, changePlayerClass] = useState(0)
   const [skillsPlayerHave, changeSkillsPlayerHave] = useState<Skill[]>([])
 
   interface Skill {
     name: string
-    class: number
+    class: number[]
     attack?: number
     def?: number
     crit?: number
@@ -49,6 +50,7 @@ function ComponentPlayerOne({ fightText }: Props) {
       (skill.dodge ?? 0) <= dodge &&
       (skill.counter ?? 0) <= counterStrike &&
       (skill.miss ?? 0) <= miss &&
+      skill.class.includes(playerClass) &&
       skillsPlayerHave.length < 5 &&
       !skillsPlayerHave.find((skills) => skills.name === skill.name),
   )
@@ -80,6 +82,11 @@ function ComponentPlayerOne({ fightText }: Props) {
   const clickMinusButton = (state: React.Dispatch<React.SetStateAction<number>>) => {
     state((value) => Math.max(value - 1, 0))
   }
+
+  const clickPlayerClass = (newPlayerClass: React.SetStateAction<number>) => {
+    playerClass != newPlayerClass ? changePlayerClass(newPlayerClass) : changePlayerClass(0)
+  }
+
 
   let newFightText = fightText.replace(/[\s\S]*?Ход боя:\s*/u, "")
   newFightText = newFightText.replace(/Следующий ход:[\s\S]*/u, "")
@@ -218,80 +225,114 @@ function ComponentPlayerOne({ fightText }: Props) {
         ))}
       </div>
       <div className="player-setting">
-        <div className="player-nickname">
-          <input
-            className="player-nick"
-            value={player}
-            onChange={(e) => playerNameChange(e.target.value)}
-          ></input>
+        <div className="player-information">
+          <div className="player-nickname">
+            <input
+              className="player-nick"
+              value={player}
+              onChange={(e) => playerNameChange(e.target.value)}
+            ></input>
+          </div>
+          <div className="player-perks">
+            <div className="perk">
+              <p className="perk-count">
+                <span>🗡</span>
+                <span>{attack}</span>
+              </p>
+              <div className="perk-buttons">
+                <button className="perk-button" onClick={() => clickPlusButton(addAttack)}>
+                  +
+                </button>
+                <button className="perk-button" onClick={() => clickMinusButton(addAttack)}>
+                  -
+                </button>
+              </div>
+            </div>
+            <div className="perk">
+              <p className="perk-count">
+                <span>🛡</span>
+                <span>{defense}</span>
+              </p>
+              <div className="perk-buttons">
+                <button className="perk-button" onClick={() => clickPlusButton(addDefense)}>
+                  +
+                </button>
+                <button className="perk-button" onClick={() => clickMinusButton(addDefense)}>
+                  -
+                </button>
+              </div>
+            </div>
+            <div className="perk">
+              <p className="perk-count">
+                <span>🥊</span>
+                <span>{critical}</span>
+              </p>
+              <div className="perk-buttons">
+                <button className="perk-button" onClick={() => clickPlusButton(addCritical)}>
+                  +
+                </button>
+                <button className="perk-button" onClick={() => clickMinusButton(addCritical)}>
+                  -
+                </button>
+              </div>
+            </div>
+            <div className="perk">
+              <p className="perk-count">
+                <span>⚡️</span>
+                <span>{dodge}</span>
+              </p>
+              <div className="perk-buttons">
+                <button className="perk-button" onClick={() => clickPlusButton(addDodge)}>
+                  +
+                </button>
+                <button className="perk-button" onClick={() => clickMinusButton(addDodge)}>
+                  -
+                </button>
+              </div>
+            </div>
+            <div className="perk">
+              <p className="perk-count">
+                <span>🤺</span>
+                <span>{counterStrike}</span>
+              </p>
+              <div className="perk-buttons">
+                <button className="perk-button" onClick={() => clickPlusButton(addCounterStrike)}>
+                  +
+                </button>
+                <button className="perk-button" onClick={() => clickMinusButton(addCounterStrike)}>
+                  -
+                </button>
+              </div>
+            </div>
+            <div className="perk">
+              <p className="perk-count">
+                <span>🌬</span>
+                <span>{miss}</span>
+              </p>
+              <div className="perk-buttons">
+                <button className="perk-button" onClick={() => clickPlusButton(addMiss)}>
+                  +
+                </button>
+                <button className="perk-button" onClick={() => clickMinusButton(addMiss)}>
+                  -
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="player-perks">
-          <div className="perk">
-            <p className="perk-count">{attack}</p>
-            <div className="perk-buttons">
-              <button className="perk-button" onClick={() => clickPlusButton(addAttack)}>
-                +
-              </button>
-              <button className="perk-button" onClick={() => clickMinusButton(addAttack)}>
-                -
-              </button>
-            </div>
-          </div>
-          <div className="perk">
-            <p className="perk-count">🛡{defense}</p>
-            <div className="perk-buttons">
-              <button className="perk-button" onClick={() => clickPlusButton(addDefense)}>
-                +
-              </button>
-              <button className="perk-button" onClick={() => clickMinusButton(addDefense)}>
-                -
-              </button>
-            </div>
-          </div>
-          <div className="perk">
-            <p className="perk-count">🥊{critical}</p>
-            <div className="perk-buttons">
-              <button className="perk-button" onClick={() => clickPlusButton(addCritical)}>
-                +
-              </button>
-              <button className="perk-button" onClick={() => clickMinusButton(addCritical)}>
-                -
-              </button>
-            </div>
-          </div>
-          <div className="perk">
-            <p className="perk-count">⚡️{dodge}</p>
-            <div className="perk-buttons">
-              <button className="perk-button" onClick={() => clickPlusButton(addDodge)}>
-                +
-              </button>
-              <button className="perk-button" onClick={() => clickMinusButton(addDodge)}>
-                -
-              </button>
-            </div>
-          </div>
-          <div className="perk">
-            <p className="perk-count">🤺{counterStrike}</p>
-            <div className="perk-buttons">
-              <button className="perk-button" onClick={() => clickPlusButton(addCounterStrike)}>
-                +
-              </button>
-              <button className="perk-button" onClick={() => clickMinusButton(addCounterStrike)}>
-                -
-              </button>
-            </div>
-          </div>
-          <div className="perk">
-            <p className="perk-count">🌬{miss}</p>
-            <div className="perk-buttons">
-              <button className="perk-button" onClick={() => clickPlusButton(addMiss)}>
-                +
-              </button>
-              <button className="perk-button" onClick={() => clickMinusButton(addMiss)}>
-                -
-              </button>
-            </div>
-          </div>
+        <div className="player-classes">
+          <button className={`defender-class ${playerClass === 1 ? "choosen" : ""}`} onClick={() => clickPlayerClass(1)}>
+            🛡
+          </button>
+          <button className={`berserk-class ${playerClass === 2 ? "choosen" : ""}`} onClick={() => clickPlayerClass(2)}>
+            🪓
+          </button>
+          <button className={`dodge-class ${playerClass === 3 ? "choosen" : ""}`} onClick={() => clickPlayerClass(3)}>
+            ⚡️
+          </button>
+          <button className={`cd-class ${playerClass === 4 ? "choosen" : ""}`} onClick={() => clickPlayerClass(4)}>
+            💩
+          </button>
         </div>
       </div>
       <div className="player-skills-can-use">
