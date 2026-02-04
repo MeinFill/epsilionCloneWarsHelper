@@ -227,7 +227,7 @@ function ComponentPlayerOne({ fightText }: Props) {
         </div>
         <div className="player-perks">
           <div className="perk">
-            <p className="perk-count">🗡{attack}</p>
+            <p className="perk-count">{attack}</p>
             <div className="perk-buttons">
               <button className="perk-button" onClick={() => clickPlusButton(addAttack)}>
                 +
