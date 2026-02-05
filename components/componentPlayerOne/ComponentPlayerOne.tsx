@@ -94,7 +94,7 @@ function ComponentPlayerOne({ fightText }: Props) {
 
   const persent = (count: number) => {
     const allCount = attackHead + attackBreast + attackStomach + attackBelt + attackLegs
-    return (count/allCount*100).toFixed(2)
+    return count ? (count/allCount*100).toFixed(2) : 0
   }
 
 
