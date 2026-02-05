@@ -14,6 +14,11 @@ function ComponentPlayerOne({ fightText }: Props) {
   const [dodge, addDodge] = useState(0)
   const [counterStrike, addCounterStrike] = useState(0)
   const [miss, addMiss] = useState(0)
+  const [attackHead, addAttackHead] = useState(0)
+  const [attackBreast, addAttackBreast] = useState(0)
+  const [attackStomach, addAttackStomach] = useState(0)
+  const [attackBelt, addAttackBelt] = useState(0)
+  const [attackLegs, addAttackLegs] = useState(0)
   const [playerClass, changePlayerClass] = useState(0)
   const [skillsPlayerHave, changeSkillsPlayerHave] = useState<Skill[]>([])
 
@@ -85,6 +90,11 @@ function ComponentPlayerOne({ fightText }: Props) {
 
   const clickPlayerClass = (newPlayerClass: React.SetStateAction<number>) => {
     playerClass != newPlayerClass ? changePlayerClass(newPlayerClass) : changePlayerClass(0)
+  }
+
+  const persent = (count: number) => {
+    const allCount = attackHead + attackBreast + attackStomach + attackBelt + attackLegs
+    return (count/allCount*100).toFixed(2)
   }
 
 
@@ -172,6 +182,22 @@ function ComponentPlayerOne({ fightText }: Props) {
 
     if (playerAction.includes("контр")) {
       clickPlusButton(addCounterStrike)
+    }
+
+    if (playerAction.includes("в голову")) {
+      addAttackHead(attackHead + 1)
+    }
+    else if (playerAction.includes("в грудь")) {
+      addAttackBreast(attackBreast + 1)
+    }
+    else if (playerAction.includes("в живот")) {
+      addAttackStomach(attackStomach + 1)
+    }
+    else if (playerAction.includes("в пояс")) {
+      addAttackBelt(attackBelt + 1)
+    }
+    else if (playerAction.includes("в ноги")) {
+      addAttackLegs(attackLegs + 1)
     }
   }, [playerAction])
 
@@ -321,19 +347,26 @@ function ComponentPlayerOne({ fightText }: Props) {
           </div>
         </div>
         <div className="player-classes">
-          <button className={`defender-class ${playerClass === 1 ? "choosen" : ""}`} onClick={() => clickPlayerClass(1)}>
+          <button className={`class defender-class ${playerClass === 1 ? "choosen" : ""}`} onClick={() => clickPlayerClass(1)}>
             🛡
           </button>
-          <button className={`berserk-class ${playerClass === 2 ? "choosen" : ""}`} onClick={() => clickPlayerClass(2)}>
+          <button className={`class berserk-class ${playerClass === 2 ? "choosen" : ""}`} onClick={() => clickPlayerClass(2)}>
             🪓
           </button>
-          <button className={`dodge-class ${playerClass === 3 ? "choosen" : ""}`} onClick={() => clickPlayerClass(3)}>
+          <button className={`class dodge-class ${playerClass === 3 ? "choosen" : ""}`} onClick={() => clickPlayerClass(3)}>
             ⚡️
           </button>
-          <button className={`cd-class ${playerClass === 4 ? "choosen" : ""}`} onClick={() => clickPlayerClass(4)}>
+          <button className={`class cd-class ${playerClass === 4 ? "choosen" : ""}`} onClick={() => clickPlayerClass(4)}>
             💩
           </button>
         </div>
+      </div>
+      <div className="player-attack-zones">
+        <div className="attack-zone">Голова: {attackHead} {persent(attackHead)}%</div>
+        <div className="attack-zone">Грудь: {attackBreast} {persent(attackBreast)}%</div>
+        <div className="attack-zone">Живот: {attackStomach} {persent(attackStomach)}%</div>
+        <div className="attack-zone">Пояс: {attackBelt} {persent(attackBelt)}%</div>
+        <div className="attack-zone">Ноги:{attackLegs} {persent(attackLegs)}%</div>
       </div>
       <div className="player-skills-can-use">
         {skillsCanUse.map((skill) => (
