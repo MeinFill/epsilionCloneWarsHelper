@@ -97,6 +97,8 @@ function ComponentPlayerOne({ fightText }: Props) {
     return count != 0 ? (count/allCount*100).toFixed(2) : "0.00"
   }
 
+  
+  const playerNickname = player.length > 0 ? player.replace(/[^а-яА-Яa-zA-Z\s]/g, "") : "-0"
 
   let newFightText = fightText.replace(/[\s\S]*?Ход боя:\s*/u, "")
   newFightText = newFightText.replace(/Следующий ход:[\s\S]*/u, "")
@@ -117,9 +119,10 @@ function ComponentPlayerOne({ fightText }: Props) {
     /(?![🗡🛡🥊⚡️🤺🌬])[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu,
     "",
   )
-  let regex = new RegExp(`${player}\\s+\\d+\\s+использует комбинацию\\s+(.+?\\))`, "u")
+  let regex = new RegExp(`${playerNickname}\\s+\\d+\\s+использует комбинацию\\s+(.+?\\))`, "u")
   let match = combosText.match(regex)
   const combo = match ? match[1].trim() : null
+  
 
   useEffect(() => {
     if (combo) {
@@ -135,7 +138,6 @@ function ComponentPlayerOne({ fightText }: Props) {
     "",
   )
   actionsText = actionsText.replace(/[^а-яА-Яa-zA-Z\s]/g, "")
-  const playerNickname = player.replace(/[^а-яА-Яa-zA-Z\s]/g, "")
 
   const beatIndex = actionsText.match(/(\S+\s+бьет)/i)
   if (beatIndex && beatIndex.index !== undefined) {
@@ -351,12 +353,24 @@ function ComponentPlayerOne({ fightText }: Props) {
             🛡
           </button>
           <button className={`class berserk-class ${playerClass === 2 ? "choosen" : ""}`} onClick={() => clickPlayerClass(2)}>
-            🪓
+            🥊
           </button>
           <button className={`class dodge-class ${playerClass === 3 ? "choosen" : ""}`} onClick={() => clickPlayerClass(3)}>
-            ⚡️
+            🪓
           </button>
           <button className={`class cd-class ${playerClass === 4 ? "choosen" : ""}`} onClick={() => clickPlayerClass(4)}>
+            💥
+          </button>
+          <button className={`class defender-class ${playerClass === 5 ? "choosen" : ""}`} onClick={() => clickPlayerClass(5)}>
+           🤺
+          </button>
+          <button className={`class berserk-class ${playerClass === 6 ? "choosen" : ""}`} onClick={() => clickPlayerClass(6)}>
+            ⚡️
+          </button>
+          <button className={`class dodge-class ${playerClass === 7 ? "choosen" : ""}`} onClick={() => clickPlayerClass(7)}>
+            🤡
+          </button>
+          <button className={`class cd-class ${playerClass === 8 ? "choosen" : ""}`} onClick={() => clickPlayerClass(8)}>
             💩
           </button>
         </div>
