@@ -246,26 +246,24 @@ function ComponentPlayerOne({ fightText }: Props) {
   // Твой готовый Access Key (client_id:client_secret в Base64)
   const BASE64_AUTH = 'MDE5Y2U1YmItYzUwZC03NGJkLTg3NDAtY2YxZDU1ZTI4YTk5OmMwNDZiMTk5LTdkZWUtNDJlNy05NWUwLTM1MGMxZTFiZTE4NA==';
 
-  // 1. Получаем токен
   async function getToken() {
-    const res = await fetch('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', {
+    const res = await fetch('/api/gigachat-token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': `Basic ${BASE64_AUTH}`,
         'RqUID': crypto.randomUUID?.() || '123e4567-e89b-12d3-a456-426614174000'
-      },
-      body: 'scope=GIGACHAT_API_PERS'
+      }
     });
+
     const data = await res.json();
     return data.access_token;
   }
 
-  // 2. Отправляем запрос
   async function askGigaChat() {
     const token = await getToken();
 
-    const res = await fetch('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', {
+    const res = await fetch('/api/gigachat-chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -273,17 +271,14 @@ function ComponentPlayerOne({ fightText }: Props) {
       },
       body: JSON.stringify({
         model: 'GigaChat',
-        messages: [
-          { role: 'user', content: 'Привет, напиши слово "Весна"' }
-        ],
+        messages: [{ role: 'user', content: 'Привет, напиши слово "Весна"' }],
         temperature: 0.3,
         max_tokens: 10
       })
     });
 
     const data = await res.json();
-    const answer = data.choices[0].message.content;
-    return answer;
+    return data.choices[0].message.content;
   }
 
   useEffect(() => {
