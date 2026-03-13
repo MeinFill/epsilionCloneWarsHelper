@@ -21,6 +21,8 @@ function ComponentPlayerOne({ fightText }: Props) {
   const [attackLegs, addAttackLegs] = useState(0)
   const [playerClass, changePlayerClass] = useState(0)
   const [skillsPlayerHave, changeSkillsPlayerHave] = useState<Skill[]>([])
+  const [gigaAnswer, setGigaAnswer] = useState("")
+  const [loadingGiga, setLoadingGiga] = useState(false)
 
   interface Skill {
     name: string
@@ -94,10 +96,10 @@ function ComponentPlayerOne({ fightText }: Props) {
 
   const persent = (count: number) => {
     const allCount = attackHead + attackBreast + attackStomach + attackBelt + attackLegs
-    return count != 0 ? (count/allCount*100).toFixed(2) : "0.00"
+    return count != 0 ? (count / allCount * 100).toFixed(2) : "0.00"
   }
 
-  
+
   const playerNickname = player.length > 0 ? player.replace(/[^а-яА-Яa-zA-Z\s]/g, "") : "-0"
 
   let newFightText = fightText.replace(/[\s\S]*?Ход боя:\s*/u, "")
@@ -122,7 +124,7 @@ function ComponentPlayerOne({ fightText }: Props) {
   let regex = new RegExp(`${playerNickname}\\s+\\d+\\s+использует комбинацию\\s+(.+?\\))`, "u")
   let match = combosText.match(regex)
   const combo = match ? match[1].trim() : null
-  
+
 
   useEffect(() => {
     if (combo) {
@@ -240,6 +242,69 @@ function ComponentPlayerOne({ fightText }: Props) {
       clickPlusButton(addDodge)
     }
   }, [toPlayerAction])
+
+  // Твой готовый Access Key (client_id:client_secret в Base64)
+  const BASE64_AUTH = 'MDE5Y2U1YmItYzUwZC03NGJkLTg3NDAtY2YxZDU1ZTI4YTk5OmMwNDZiMTk5LTdkZWUtNDJlNy05NWUwLTM1MGMxZTFiZTE4NA==';
+
+  // 1. Получаем токен
+  async function getToken() {
+    const res = await fetch('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${BASE64_AUTH}`,
+        'RqUID': crypto.randomUUID?.() || '123e4567-e89b-12d3-a456-426614174000'
+      },
+      body: 'scope=GIGACHAT_API_PERS'
+    });
+    const data = await res.json();
+    return data.access_token;
+  }
+
+  // 2. Отправляем запрос
+  async function askGigaChat() {
+    const token = await getToken();
+
+    const res = await fetch('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        model: 'GigaChat',
+        messages: [
+          { role: 'user', content: 'Привет, напиши слово "Весна"' }
+        ],
+        temperature: 0.3,
+        max_tokens: 10
+      })
+    });
+
+    const data = await res.json();
+    const answer = data.choices[0].message.content;
+    return answer;
+  }
+
+  useEffect(() => {
+    let isMounted = true
+
+    setLoadingGiga(true)
+    askGigaChat()
+      .then((answer) => {
+        if (isMounted) setGigaAnswer(answer)
+      })
+      .catch(() => {
+        if (isMounted) setGigaAnswer("Ошибка")
+      })
+      .finally(() => {
+        if (isMounted) setLoadingGiga(false)
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, []) // пустой массив = один раз при монтировании
 
   return (
     <div className="player-card">
@@ -362,7 +427,7 @@ function ComponentPlayerOne({ fightText }: Props) {
             💥
           </button>
           <button className={`class defender-class ${playerClass === 5 ? "choosen" : ""}`} onClick={() => clickPlayerClass(5)}>
-           🤺
+            🤺
           </button>
           <button className={`class berserk-class ${playerClass === 6 ? "choosen" : ""}`} onClick={() => clickPlayerClass(6)}>
             ⚡️
@@ -381,6 +446,10 @@ function ComponentPlayerOne({ fightText }: Props) {
         <div className="attack-zone">Живот: {attackStomach} {persent(attackStomach)}%</div>
         <div className="attack-zone">Пояс: {attackBelt} {persent(attackBelt)}%</div>
         <div className="attack-zone">Ноги:{attackLegs} {persent(attackLegs)}%</div>
+      </div>
+      <div>
+        <p>ХУЙ</p>
+        <p>{loadingGiga ? "Загрузка..." : gigaAnswer}</p>
       </div>
       <div className="player-skills-can-use">
         {skillsCanUse.map((skill) => (
