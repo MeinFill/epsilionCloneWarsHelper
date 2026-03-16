@@ -4,10 +4,10 @@ import "./ComponentPlayerOne.css"
 
 type Props = {
   fightText: string
-  playerId: number
+  gigaAnswer: string
 }
 
-function ComponentPlayerOne({ fightText, playerId }: Props) {
+function ComponentPlayerOne({ fightText, gigaAnswer }: Props) {
   const [player, renamePlayer] = useState("")
   const [attack, addAttack] = useState(0)
   const [defense, addDefense] = useState(0)
@@ -22,7 +22,6 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
   const [attackLegs, addAttackLegs] = useState(0)
   const [playerClass, changePlayerClass] = useState(0)
   const [skillsPlayerHave, changeSkillsPlayerHave] = useState<Skill[]>([])
-  const [gigaAnswer, setGigaAnswer] = useState<{ id: number; text: string } | null>(null)
 
   interface Skill {
     name: string
@@ -243,58 +242,6 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
     }
   }, [toPlayerAction])
 
-  // Твой готовый Access Key (client_id:client_secret в Base64)
-  const BASE64_AUTH = 'MDE5Y2U1YmItYzUwZC03NGJkLTg3NDAtY2YxZDU1ZTI4YTk5OmMwNDZiMTk5LTdkZWUtNDJlNy05NWUwLTM1MGMxZTFiZTE4NA==';
-
-  async function getToken() {
-    const res = await fetch('/api/gigachat-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${BASE64_AUTH}`,
-        'RqUID': crypto.randomUUID?.() || '123e4567-e89b-12d3-a456-426614174000'
-      }
-    });
-
-    const data = await res.json();
-    return data.access_token;
-  }
-
-  async function askGigaChat() {
-    const token = await getToken();
-
-    const res = await fetch('/api/gigachat-chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        model: 'GigaChat',
-        messages: [{ role: 'user', content: 'Сколько будет 10 + 2?' }],
-        temperature: 1,
-        max_tokens: 10
-      })
-    });
-
-    const data = await res.json();
-    return data.choices[0].message.content;
-  }
-
-  useEffect(() => {
-    let isMounted = true
-
-    askGigaChat()
-      .then((answer) => {
-        if (isMounted) setGigaAnswer({ id: playerId, text: answer })
-      })
-      .catch(() => {
-        if (isMounted) setGigaAnswer({ id: playerId, text: "Ошибка" })
-      })
-
-    return () => { isMounted = false }
-  }, [playerId])
-
   return (
     <div className="player-card">
       <div className="player-skills-have">
@@ -439,7 +386,7 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
       <div>
         <p>Говно</p>
         <p>
-          {gigaAnswer?.id === playerId ? gigaAnswer.text : "Загрузка..."}
+          {gigaAnswer ? gigaAnswer : "Загрузка..."}
         </p>
       </div>
       <div className="player-skills-can-use">
