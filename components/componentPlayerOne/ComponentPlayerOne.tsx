@@ -272,7 +272,7 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
       body: JSON.stringify({
         model: 'GigaChat',
         messages: [{ role: 'user', content: 'Сколько будет 10 + 2?' }],
-        temperature: 0.3,
+        temperature: 1,
         max_tokens: 10
       })
     });
