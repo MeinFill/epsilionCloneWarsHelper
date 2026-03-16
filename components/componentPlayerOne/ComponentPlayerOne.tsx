@@ -442,7 +442,7 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
         <div className="attack-zone">Ноги:{attackLegs} {persent(attackLegs)}%</div>
       </div>
       <div>
-        <p>ХУЙ</p>
+        <p>Говно</p>
         <p>
           {gigaAnswer?.id === playerId ? gigaAnswer.text : "Загрузка..."}
         </p>
