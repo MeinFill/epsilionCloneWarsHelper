@@ -21,11 +21,11 @@ function App() {
           </a>
         </div>
         <div className="players-list">
-          <ComponentPlayerOne fightText={fightText.text} />
-          <ComponentPlayerOne fightText={fightText.text} />
-          <ComponentPlayerOne fightText={fightText.text} />
-          <ComponentPlayerOne fightText={fightText.text} />
-          <ComponentPlayerOne fightText={fightText.text} />
+          <ComponentPlayerOne fightText={fightText.text} playerId={0} />
+          <ComponentPlayerOne fightText={fightText.text} playerId={1} />
+          <ComponentPlayerOne fightText={fightText.text} playerId={2} />
+          <ComponentPlayerOne fightText={fightText.text} playerId={3} />
+          <ComponentPlayerOne fightText={fightText.text} playerId={4} />
         </div>
         <div className="input-div">
           <textarea

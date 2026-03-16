@@ -4,9 +4,10 @@ import "./ComponentPlayerOne.css"
 
 type Props = {
   fightText: string
+  playerId: number
 }
 
-function ComponentPlayerOne({ fightText }: Props) {
+function ComponentPlayerOne({ fightText, playerId }: Props) {
   const [player, renamePlayer] = useState("")
   const [attack, addAttack] = useState(0)
   const [defense, addDefense] = useState(0)
@@ -296,10 +297,8 @@ function ComponentPlayerOne({ fightText }: Props) {
         if (isMounted) setLoadingGiga(false)
       })
 
-    return () => {
-      isMounted = false
-    }
-  }, []) // пустой массив = один раз при монтировании
+    return () => { isMounted = false }
+  }, [playerId])
 
   return (
     <div className="player-card">
