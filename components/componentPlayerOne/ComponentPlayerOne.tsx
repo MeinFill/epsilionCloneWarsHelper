@@ -272,7 +272,7 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
       },
       body: JSON.stringify({
         model: 'GigaChat',
-        messages: [{ role: 'user', content: 'Привет. Общайся только односложными ответами. Сколько будет 3 + 2? Без вычислений, без пояснений. Сухой ответ' }],
+        messages: [{ role: 'user', content: 'Сколько будет 10 + 2?' }],
         temperature: 0.3,
         max_tokens: 10
       })
