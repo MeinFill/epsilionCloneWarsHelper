@@ -23,7 +23,6 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
   const [playerClass, changePlayerClass] = useState(0)
   const [skillsPlayerHave, changeSkillsPlayerHave] = useState<Skill[]>([])
   const [gigaAnswer, setGigaAnswer] = useState<{ id: number; text: string } | null>(null)
-  const [loadingGiga, setLoadingGiga] = useState(false)
 
   interface Skill {
     name: string
@@ -285,16 +284,12 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
   useEffect(() => {
     let isMounted = true
 
-    setLoadingGiga(true)
     askGigaChat()
       .then((answer) => {
         if (isMounted) setGigaAnswer({ id: playerId, text: answer })
       })
       .catch(() => {
         if (isMounted) setGigaAnswer({ id: playerId, text: "Ошибка" })
-      })
-      .finally(() => {
-        if (isMounted) setLoadingGiga(false)
       })
 
     return () => { isMounted = false }
