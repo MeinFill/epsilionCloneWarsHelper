@@ -22,7 +22,7 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
   const [attackLegs, addAttackLegs] = useState(0)
   const [playerClass, changePlayerClass] = useState(0)
   const [skillsPlayerHave, changeSkillsPlayerHave] = useState<Skill[]>([])
-  const [gigaAnswer, setGigaAnswer] = useState("")
+  const [gigaAnswer, setGigaAnswer] = useState<{ id: number; text: string } | null>(null)
   const [loadingGiga, setLoadingGiga] = useState(false)
 
   interface Skill {
@@ -288,10 +288,10 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
     setLoadingGiga(true)
     askGigaChat()
       .then((answer) => {
-        if (isMounted) setGigaAnswer(answer)
+        if (isMounted) setGigaAnswer({ id: playerId, text: answer })
       })
       .catch(() => {
-        if (isMounted) setGigaAnswer("Ошибка")
+        if (isMounted) setGigaAnswer({ id: playerId, text: "Ошибка" })
       })
       .finally(() => {
         if (isMounted) setLoadingGiga(false)
@@ -443,7 +443,9 @@ function ComponentPlayerOne({ fightText, playerId }: Props) {
       </div>
       <div>
         <p>ХУЙ</p>
-        <p>{loadingGiga ? "Загрузка..." : gigaAnswer}</p>
+        <p>
+          {gigaAnswer?.id === playerId ? gigaAnswer.text : "Загрузка..."}
+        </p>
       </div>
       <div className="player-skills-can-use">
         {skillsCanUse.map((skill) => (
