@@ -6,7 +6,11 @@ import eps from "./assets/eps.png"
 function App() {
   const [inputValue, setInputValue] = useState("")
   const [fightText, setFightText] = useState({ id: 0, text: "" })
-  const [gigaAnswers, setGigaAnswer] = useState<string[]>([])
+  const [firstPlayerAnswer, setFirstPlayerAnswer] = useState("")
+  const [secondPlayerAnswer, setSecondPlayerAnswer] = useState("")
+  const [thirdPlayerAnswer, setThirdPlayerAnswer] = useState("")
+  const [fourthPlayerAnswer, setFourthPlayerAnswer] = useState("")
+  const [fifthPlayerAnswer, setFifthPlayerAnswer] = useState("")
 
   const setNewFightText = () => {
     setFightText({ id: fightText.id + 1, text: inputValue })
@@ -78,10 +82,11 @@ function App() {
         // Парсим ответ
         const answers = parseGigaResponse(rawAnswer)
         console.log(answers)
-        setGigaAnswer(answers)
-      })
-      .catch(() => {
-        if (isMounted) setGigaAnswer(Array(5).fill("Ошибка"))
+        setFirstPlayerAnswer(answers[0])
+        setSecondPlayerAnswer(answers[1])
+        setThirdPlayerAnswer(answers[2])
+        setFourthPlayerAnswer(answers[3])
+        setFifthPlayerAnswer(answers[4])
       })
 
     return () => { isMounted = false }
@@ -104,12 +109,11 @@ function App() {
           </a>
         </div>
         <div className="players-list">
-          {gigaAnswers.map((answer) => (
-            <ComponentPlayerOne
-              fightText={fightText.text}
-              gigaAnswer={answer}
-            />
-          ))}
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fifthPlayerAnswer} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={secondPlayerAnswer} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={thirdPlayerAnswer} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fourthPlayerAnswer} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fifthPlayerAnswer} />
         </div>
         <div className="input-div">
           <textarea

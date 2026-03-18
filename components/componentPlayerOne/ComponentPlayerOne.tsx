@@ -384,9 +384,8 @@ function ComponentPlayerOne({ fightText, gigaAnswer }: Props) {
         <div className="attack-zone">Ноги:{attackLegs} {persent(attackLegs)}%</div>
       </div>
       <div>
-        <p>Говно</p>
         <p>
-          {gigaAnswer ? gigaAnswer : "Загрузка..."}
+          ИИ-подсказка, наиболее вероятные зона атаки игрока: {gigaAnswer ? gigaAnswer : "Загрузка ответа..."}
         </p>
       </div>
       <div className="player-skills-can-use">
