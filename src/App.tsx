@@ -75,6 +75,7 @@ function App() {
 
         // Парсим ответ
         const answers = parseGigaResponse(rawAnswer)
+        console.log(answers)
         setGigaAnswer(answers)
       })
       .catch(() => {
