@@ -109,7 +109,7 @@ function App() {
           </a>
         </div>
         <div className="players-list">
-          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fifthPlayerAnswer} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={firstPlayerAnswer} />
           <ComponentPlayerOne fightText={fightText.text} gigaAnswer={secondPlayerAnswer} />
           <ComponentPlayerOne fightText={fightText.text} gigaAnswer={thirdPlayerAnswer} />
           <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fourthPlayerAnswer} />
