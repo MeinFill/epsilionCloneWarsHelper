@@ -6,6 +6,11 @@ import eps from "./assets/eps.png"
 function App() {
   const [inputValue, setInputValue] = useState("")
   const [fightText, setFightText] = useState({ id: 0, text: "" })
+  const [firstPlayerAttacks, setFirstPlayerAttacks] = useState<string[]>([])
+  const [secondPlayerAttacks, setSecondPlayerAttacks] = useState<string[]>([])
+  const [thirdPlayerAttacks, setThirdPlayerAttacks] = useState<string[]>([])
+  const [fourthPlayerAttacks, setFourthPlayerAttacks] = useState<string[]>([])
+  const [fifthPlayerAttacks, setFifthPlayerAttacks] = useState<string[]>([])
   const [firstPlayerAnswer, setFirstPlayerAnswer] = useState("")
   const [secondPlayerAnswer, setSecondPlayerAnswer] = useState("")
   const [thirdPlayerAnswer, setThirdPlayerAnswer] = useState("")
@@ -46,22 +51,23 @@ function App() {
         model: 'GigaChat',
         messages: [{
           role: 'user', content: `Мы с тобой играем в игру "Угадай куда будет бить игрок. Есть 5 зон: Голова, грудь, живот, пояс, ноги. Дальше я тебе напишу куда били игроки: 
-                                              Soulnishko: Ноги, Голова, Живот, Голова, Грудь, Грудь, Живот
-                                              VLGAmurr99: Ноги, Ноги, Голова, Голова, Голова, Живот, Ноги
-                                              ХАХАХАХАНТ: Ноги, Ноги, Грудь, Голова, Живот, Голова, Пояс
-                                              Mike413: Живот, Голова, Грудь, Пояс, Голова, Грудь, Живот
-                                              Rew: Ноги, Грудь, Пояс, Голова, Пояс, Пояс, Грудь
+                                              Игрок 1: ${firstPlayerAttacks}
+                                              Игрок 2: ${thirdPlayerAnswer}
+                                              Игрок 3: ${thirdPlayerAnswer}
+                                              Игрок 4: ${fourthPlayerAnswer}
+                                              Игрок 5: ${fifthPlayerAnswer}
 
                                               Сейчас тебе нужно проанализировать для каждого игрока 3 наиболее вероятные зоны следующего удара. Анализ делай как хочешь, но учти, что это настоящие люди, и они как могут придерживаться какой-то тактики, так и бить наугад
                                               Ответ должен быть дан в таком формате:
 
-                                              "Soulnishko: зона 1, зона 2, зона 3
-                                              VLGAmurr99: зона 1, зона 2, зона 3
-                                              ХАХАХАХАНТ: зона 1, зона 2, зона 3
-                                              Mike413: зона 1, зона 2, зона 3
-                                              Rew: зона 1, зона 2, зона 3"
+                                              "Игрок 1: зона 1, зона 2, зона 3
+                                              Игрок 2: зона 1, зона 2, зона 3
+                                              Игрок 3: зона 1, зона 2, зона 3
+                                              Игрок 4: зона 1, зона 2, зона 3
+                                              Игрок 5: зона 1, зона 2, зона 3"
 
                                               Анализ нужно сделать для всех пятерых игроков, повторений зон у одного игрока быть не может!
+                                              Если тебе не хватает данных, то верни для каждого игрока "Для аналитики недостаточно данных"
                                               Никаких пояснений, никаких лишних символов. Только этот список, строго в этом формате, потому что это пойдет в парсинг` }],
         temperature: 1,
         max_tokens: 150
@@ -109,11 +115,11 @@ function App() {
           </a>
         </div>
         <div className="players-list">
-          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={firstPlayerAnswer} />
-          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={secondPlayerAnswer} />
-          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={thirdPlayerAnswer} />
-          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fourthPlayerAnswer} />
-          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fifthPlayerAnswer} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={firstPlayerAnswer} attacks={firstPlayerAttacks} setAttacks={setFirstPlayerAttacks} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={secondPlayerAnswer} attacks={secondPlayerAttacks} setAttacks={setSecondPlayerAttacks} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={thirdPlayerAnswer} attacks={thirdPlayerAttacks} setAttacks={setThirdPlayerAttacks} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fourthPlayerAnswer} attacks={fourthPlayerAttacks} setAttacks={setFourthPlayerAttacks} />
+          <ComponentPlayerOne fightText={fightText.text} gigaAnswer={fifthPlayerAnswer} attacks={fifthPlayerAttacks} setAttacks={setFifthPlayerAttacks} />
         </div>
         <div className="input-div">
           <textarea

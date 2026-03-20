@@ -5,9 +5,11 @@ import "./ComponentPlayerOne.css"
 type Props = {
   fightText: string
   gigaAnswer: string
+  attacks: string[]
+  setAttacks: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function ComponentPlayerOne({ fightText, gigaAnswer }: Props) {
+function ComponentPlayerOne({ fightText, gigaAnswer, attacks, setAttacks }: Props) {
   const [player, renamePlayer] = useState("")
   const [attack, addAttack] = useState(0)
   const [defense, addDefense] = useState(0)
@@ -189,18 +191,23 @@ function ComponentPlayerOne({ fightText, gigaAnswer }: Props) {
 
     if (playerAction.includes("в голову")) {
       addAttackHead(attackHead + 1)
+      setAttacks([...attacks, 'Голова'])
     }
     else if (playerAction.includes("в грудь")) {
       addAttackBreast(attackBreast + 1)
+      setAttacks([...attacks, 'Грудь'])
     }
     else if (playerAction.includes("в живот")) {
       addAttackStomach(attackStomach + 1)
+      setAttacks([...attacks, 'Жвот'])
     }
     else if (playerAction.includes("в пояс")) {
       addAttackBelt(attackBelt + 1)
+      setAttacks([...attacks, 'Пояс'])
     }
     else if (playerAction.includes("в ноги")) {
       addAttackLegs(attackLegs + 1)
+      setAttacks([...attacks, 'Ноги'])
     }
   }, [playerAction])
 
@@ -385,7 +392,7 @@ function ComponentPlayerOne({ fightText, gigaAnswer }: Props) {
       </div>
       <div>
         <p>
-          ИИ-подсказка, наиболее вероятные зона атаки игрока: {gigaAnswer ? gigaAnswer : "Загрузка ответа..."}
+          ИИ-анализ, вероятные зоны атаки: {gigaAnswer ? gigaAnswer : "Загрузка ответа..."}
         </p>
       </div>
       <div className="player-skills-can-use">
