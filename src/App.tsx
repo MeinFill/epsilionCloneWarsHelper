@@ -38,11 +38,6 @@ function App() {
     return data.access_token;
   }
 
-  function formatAttacks(attacks: string[]) {
-    if (attacks.length === 0) return "атак не было"
-    return attacks.join(',')
-  }
-
   async function askGigaChat() {
     const token = await getToken();
 
