@@ -38,6 +38,11 @@ function App() {
     return data.access_token;
   }
 
+  function formatAttacks(attacks: string[]) {
+    if (attacks.length === 0) return "атак не было"
+    return attacks.join(',')
+  }
+
   async function askGigaChat() {
     const token = await getToken();
 
@@ -51,11 +56,11 @@ function App() {
         model: 'GigaChat',
         messages: [{
           role: 'user', content: `Мы с тобой играем в игру "Угадай куда будет бить игрок. Есть 5 зон: Голова, грудь, живот, пояс, ноги. Дальше я тебе напишу куда били игроки: 
-                                              Игрок 1: ${firstPlayerAttacks}
-                                              Игрок 2: ${thirdPlayerAnswer}
-                                              Игрок 3: ${thirdPlayerAnswer}
-                                              Игрок 4: ${fourthPlayerAnswer}
-                                              Игрок 5: ${fifthPlayerAnswer}
+                                              Игрок 1: ${formatAttacks(firstPlayerAttacks)}
+                                              Игрок 2: ${formatAttacks(secondPlayerAttacks)}
+                                              Игрок 3: ${formatAttacks(thirdPlayerAttacks)}
+                                              Игрок 4: ${formatAttacks(fourthPlayerAttacks)}
+                                              Игрок 5: ${formatAttacks(fifthPlayerAttacks)}
 
                                               Сейчас тебе нужно проанализировать для каждого игрока 3 наиболее вероятные зоны следующего удара. Анализ делай как хочешь, но учти, что это настоящие люди, и они как могут придерживаться какой-то тактики, так и бить наугад
                                               Ответ должен быть дан в таком формате:
