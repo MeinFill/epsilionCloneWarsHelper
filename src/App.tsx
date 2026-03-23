@@ -84,7 +84,7 @@ function App() {
     askGigaChat()
       .then((rawAnswer) => {
         if (!isMounted) return
-
+        console.log(rawAnswer);
         // Парсим ответ
         const answers = parseGigaResponse(rawAnswer)
         console.log(answers)
