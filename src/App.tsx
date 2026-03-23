@@ -38,6 +38,11 @@ function App() {
     return data.access_token;
   }
 
+  function formatAttacks(attacks: string[]) {
+    if (attacks.length === 0) return "атак не было"
+    return attacks.join(',')
+  }
+
   async function askGigaChat() {
     const token = await getToken();
 
@@ -51,7 +56,7 @@ function App() {
         model: 'GigaChat',
         messages: [{
           role: 'user', content: `Мы с тобой играем в игру "Угадай куда будет бить игрок. Есть 5 зон: Голова, грудь, живот, пояс, ноги. Дальше я тебе напишу куда били игроки: 
-                                              Игрок 1: Голова, Голова, Грудь, Голова
+                                              Игрок 1: ${formatAttacks(['Голова', 'Голова', 'Голова', 'Грудь', 'Живот'])}
                                               Игрок 2: Голова, Голова, Пояс, Голова
                                               Игрок 3: Ноги, Ноги, Грудь, Ноги
                                               Игрок 4: Живот, Живот, Грудь, Живот
